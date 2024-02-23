@@ -10,17 +10,17 @@ import lombok.Data;
 
 @Data
 public class TransferAmountRequest {
-	
-	 @NotNull
-	  @NotEmpty
-	  private final String fromAccountNo;
-	 
-	 @NotNull
-	  @NotEmpty
-	  private final String toAccountNo;
 
-	  @NotNull
-	  @Min(value = 0, message = "Initial balance must be positive.")
-	  private BigDecimal amount;
+    @NotNull
+    @NotEmpty
+    private final String fromAccountNo;
+
+    @NotNull
+    @NotEmpty
+    private final String toAccountNo;
+
+    @NotNull
+    @Min(value = 0, message = "Initial balance must be positive.")
+    private BigDecimal amount;
 
 }

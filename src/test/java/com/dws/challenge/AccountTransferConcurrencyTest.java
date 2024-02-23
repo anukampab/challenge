@@ -24,7 +24,7 @@ import com.dws.challenge.domain.Account;
 import com.dws.challenge.exception.AccountNotFoundException;
 import com.dws.challenge.exception.InsufficientFundsException;
 import com.dws.challenge.exception.InvalidAccountException;
-import com.dws.challenge.exception.InvalidAmmountException;
+import com.dws.challenge.exception.InvalidAmountException;
 import com.dws.challenge.exception.LockException;
 import com.dws.challenge.service.AccountsService;
 
@@ -64,9 +64,9 @@ public class AccountTransferConcurrencyTest {
 							transferAmmtAndIncrementTrCounter(Account1,
 									Account2, "1", transactionCounter);
 						} catch (InsufficientFundsException
-								| InterruptedException
-								| InvalidAccountException
-								| InvalidAmmountException | LockException | AccountNotFoundException e) {
+								 | InterruptedException
+								 | InvalidAccountException
+								 | InvalidAmountException | LockException | AccountNotFoundException e) {
 							
 							fail("Exception should not occur while transfering amount from Account1 to Account2");
 						}
@@ -77,9 +77,9 @@ public class AccountTransferConcurrencyTest {
 									Account1, "1",
 									transactionOppositeCounter);
 						} catch (InsufficientFundsException
-								| InterruptedException
-								| InvalidAccountException
-								| InvalidAmmountException | LockException | AccountNotFoundException e) {
+								 | InterruptedException
+								 | InvalidAccountException
+								 | InvalidAmountException | LockException | AccountNotFoundException e) {
 							
 							fail("Exception should not occur while transfering amount from Account2 to Account1");
 						}
@@ -91,7 +91,7 @@ public class AccountTransferConcurrencyTest {
 	private void transferAmmtAndIncrementTrCounter(String fromAccount,
 			String toAccount, String amount, AtomicInteger counter)
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		counter.incrementAndGet();
 		accountsService.transferAmount(fromAccount, toAccount, new BigDecimal(
 				amount));

@@ -7,9 +7,9 @@ import com.dws.challenge.exception.AccountNotFoundException;
 
 public interface AccountsRepository {
 
-	void createAccount(Account account) throws DuplicateAccountIdException;
+    void createAccount(Account account) throws DuplicateAccountIdException;
 
-	Account getAccount(String accountId) throws AccountNotFoundException, InvalidAccountException;
+    Account getAccount(String accountId) throws AccountNotFoundException, InvalidAccountException;
 
-	void clearAccounts();
+    void clearAccounts();
 }

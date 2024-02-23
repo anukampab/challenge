@@ -22,7 +22,7 @@ import com.dws.challenge.domain.Account;
 import com.dws.challenge.exception.AccountNotFoundException;
 import com.dws.challenge.exception.InsufficientFundsException;
 import com.dws.challenge.exception.InvalidAccountException;
-import com.dws.challenge.exception.InvalidAmmountException;
+import com.dws.challenge.exception.InvalidAmountException;
 import com.dws.challenge.exception.LockException;
 import com.dws.challenge.repository.AccountsRepositoryInMemory;
 import com.dws.challenge.service.AccountsService;
@@ -86,14 +86,14 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testNegativeAmountTransferExpectingThrowsInvalidAmmountException()
 			throws InsufficientFundsException, InterruptedException,
-			AccountNotFoundException, InvalidAmmountException, LockException, InvalidAccountException {
+			AccountNotFoundException, InvalidAmountException, LockException, InvalidAccountException {
 
 		try {
 			transactionNegativeTestCounter.incrementAndGet();	
 			this.accountsService.transferAmount(Account2, Account1,
 					new BigDecimal("-1"));
 			fail("InvalidAmmountException should have thrown when transfering negative Amount");
-		} catch (InvalidAmmountException e) {
+		} catch (InvalidAmountException e) {
 			assertThat(e.getMessage()).isEqualTo(
 					"Amount should not be negative");
 		}
@@ -102,7 +102,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testTransferWithNullFromAccount()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount(null, Account2, new BigDecimal(
@@ -117,7 +117,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testTransferWithNullToAccount()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount(Account1, null, new BigDecimal(
@@ -132,7 +132,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testTransferWithEmptyFromAccount()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount("", Account2, new BigDecimal(
@@ -146,7 +146,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testTransferWithEmptyToAccount()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount(Account1, "", new BigDecimal(
@@ -161,7 +161,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testAmountTransferWithInvalidFromAccount()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount(nonExistingAccount, Account2,
@@ -176,7 +176,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testTransferWithInvalidToAccount()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount(Account1, nonExistingAccount,
@@ -192,7 +192,7 @@ public class AccountTransferServiceTest {
 	@Test
 	public void testTransferAmountIsGreaterThenAccountBalance()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 
 		try {
 			transactionNegativeTestCounter.incrementAndGet();
@@ -218,7 +218,7 @@ public class AccountTransferServiceTest {
 	 * @throws InsufficientFundsException
 	 * @throws InterruptedException
 	 * @throws InvalidAccountException
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 * @throws LockException
 	 * @throws AccountNotFoundException 
 	 */
@@ -226,7 +226,7 @@ public class AccountTransferServiceTest {
 	@ThreadCount(threadcount)
 	public void testTransferAmountConcurrentlyFromAccToToAccdestroyShallHaveSameValue()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		transactionCounter.incrementAndGet();
 		this.accountsService.transferAmount(Account1, Account2, new BigDecimal(
 				"1"));
@@ -238,7 +238,7 @@ public class AccountTransferServiceTest {
 	 * @throws InsufficientFundsException
 	 * @throws InterruptedException
 	 * @throws InvalidAccountException
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 * @throws LockException
 	 * @throws AccountNotFoundException 
 	 */
@@ -246,7 +246,7 @@ public class AccountTransferServiceTest {
 	@ThreadCount(threadcount)
 	public void testTransferConcurrentlyToAccToFromAccdestroyAccountShallHaveSameValue()
 			throws InsufficientFundsException, InterruptedException,
-			InvalidAccountException, InvalidAmmountException, LockException, AccountNotFoundException {
+			InvalidAccountException, InvalidAmountException, LockException, AccountNotFoundException {
 		transactionOppositeCounter.incrementAndGet();		
 		
 			this.accountsService.transferAmount(Account2, Account1, new BigDecimal(

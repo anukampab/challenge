@@ -12,7 +12,7 @@ import com.dws.challenge.domain.Account;
 import com.dws.challenge.exception.AccountNotFoundException;
 import com.dws.challenge.exception.InsufficientFundsException;
 import com.dws.challenge.exception.InvalidAccountException;
-import com.dws.challenge.exception.InvalidAmmountException;
+import com.dws.challenge.exception.InvalidAmountException;
 import com.dws.challenge.exception.LockException;
 import com.dws.challenge.repository.AccountsRepository;
 
@@ -56,12 +56,12 @@ public class AccountsService {
 	 * @throws InsufficientFundsException
 	 * @throws InterruptedException
 	 * @throws InvalidAccountException
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 * @throws AccountNotFoundException
 	 * @throws LockException
 	 */
 	public boolean transferAmount(String fromAccountId, String toAccountId, BigDecimal amount)
-			throws InsufficientFundsException, InterruptedException, InvalidAccountException, InvalidAmmountException,
+			throws InsufficientFundsException, InterruptedException, InvalidAccountException, InvalidAmountException,
 			AccountNotFoundException, LockException {
 		if (validatePositiveAmount(amount)) {
 			Account fromAccount = accountsRepository.getAccount(fromAccountId);
@@ -82,11 +82,11 @@ public class AccountsService {
 	 * @return
 	 * @throws InsufficientFundsException
 	 * @throws InterruptedException
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 * @throws LockException
 	 */
 	private boolean transfer(Account fromAccount, Account toAccount, BigDecimal amount)
-			throws InsufficientFundsException, InterruptedException, InvalidAmmountException, LockException {
+			throws InsufficientFundsException, InterruptedException, InvalidAmountException, LockException {
 		// Sort accounts based on their IDs to ensure consistent locking order
 		Account[] sortedAccounts = { fromAccount, toAccount };
 		Arrays.sort(sortedAccounts, Comparator.comparing(Account::getAccountId));
@@ -121,11 +121,11 @@ public class AccountsService {
 	 * @return
 	 * @throws InsufficientFundsException
 	 * @throws InterruptedException
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 */
 
 	public boolean withdrawAmount(Account account, BigDecimal amount)
-			throws InsufficientFundsException, InterruptedException, InvalidAmmountException {
+			throws InsufficientFundsException, InterruptedException, InvalidAmountException {
 		if (validatePositiveAmount(amount)) {
 			if (account.getBalance().compareTo(amount) >= 0) {
 				account.setBalance(account.getBalance().subtract(amount));
@@ -148,10 +148,10 @@ public class AccountsService {
 	 * @param amount
 	 * @return
 	 * @throws InterruptedException
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 */
 	public boolean depositAmount(Account account, BigDecimal amount)
-			throws InterruptedException, InvalidAmmountException {
+			throws InterruptedException, InvalidAmountException {
 		if (validatePositiveAmount(amount)) {
 			account.setBalance(account.getBalance().add(amount));
 			return true;
@@ -165,13 +165,13 @@ public class AccountsService {
 	 * 
 	 * @param amount
 	 * @return
-	 * @throws InvalidAmmountException
+	 * @throws InvalidAmountException
 	 */
-	private boolean validatePositiveAmount(BigDecimal amount) throws InvalidAmmountException {
+	private boolean validatePositiveAmount(BigDecimal amount) throws InvalidAmountException {
 		if (amount.compareTo(BigDecimal.ZERO) > 0) {
 			return true;
 		} else {
-			throw new InvalidAmmountException("Amount should not be negative");
+			throw new InvalidAmountException("Amount should not be negative");
 		}
 	}
 

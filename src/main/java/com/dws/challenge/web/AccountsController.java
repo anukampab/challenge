@@ -26,42 +26,41 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccountsController {
 
-  private final AccountsService accountsService;
+    private final AccountsService accountsService;
 
-  @Autowired
-  public AccountsController(AccountsService accountsService) {
-    this.accountsService = accountsService;
-  }
-
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> createAccount(@RequestBody @Valid Account account) {
-    log.info("Creating account {}", account);
-
-    try {
-    this.accountsService.createAccount(account);
-    } catch (DuplicateAccountIdException dae) {
-      return new ResponseEntity<>(dae.getMessage(), HttpStatus.BAD_REQUEST);
+    @Autowired
+    public AccountsController(AccountsService accountsService) {
+        this.accountsService = accountsService;
     }
 
-    return new ResponseEntity<>(HttpStatus.CREATED);
-  }
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> createAccount(@RequestBody @Valid Account account) {
+        log.info("Creating account {}", account);
 
-  @GetMapping(path = "/{accountId}")
-  public Account getAccount(@PathVariable String accountId) throws AccountNotFoundException, InvalidAccountException {
-    log.info("Retrieving account for id {}", accountId);
-    return this.accountsService.getAccount(accountId);
-  }
+        try {
+            this.accountsService.createAccount(account);
+        } catch (DuplicateAccountIdException dae) {
+            return new ResponseEntity<>(dae.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
-  @PostMapping(path="/transfer",consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> transferAmount(@RequestBody @Valid TransferAmountRequest transferRequest)  {
-	  log.info("Transfering ammount from account {} to account {}", transferRequest.getFromAccountNo(),transferRequest.getToAccountNo());
-    try {
-    this.accountsService.transferAmount(transferRequest.getFromAccountNo(),transferRequest.getToAccountNo(),transferRequest.getAmount());
-    }  
-    catch (Exception e) {
-		 return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-	}
-    
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/{accountId}")
+    public Account getAccount(@PathVariable String accountId) throws AccountNotFoundException, InvalidAccountException {
+        log.info("Retrieving account for id {}", accountId);
+        return this.accountsService.getAccount(accountId);
+    }
+
+    @PostMapping(path = "/transfer", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> transferAmount(@RequestBody @Valid TransferAmountRequest transferRequest) {
+        log.info("Transfering ammount from account {} to account {}", transferRequest.getFromAccountNo(), transferRequest.getToAccountNo());
+        try {
+            this.accountsService.transferAmount(transferRequest.getFromAccountNo(), transferRequest.getToAccountNo(), transferRequest.getAmount());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
