@@ -49,6 +49,7 @@ public class AccountTransferConcurrencyTest {
 	
 	@BeforeAll
 	public void setup() throws InvalidAccountException {
+		accountsService.clearAccounts();
 		this.accountsService.createAccount(new Account(Account1,
 				new BigDecimal("8000")));
 		
