@@ -198,7 +198,7 @@ public class AccountTransferServiceTest {
 			transactionNegativeTestCounter.incrementAndGet();
 			this.accountsService.transferAmount(Account3, Account4,
 					new BigDecimal("21"));
-			fail("InsufficientFundsException should have thrown when transfering Amount greater then balance");
+			fail("InsufficientFundsException should have thrown when transfering Amount greater than balance");
 		} catch (InsufficientFundsException e) {
 			assertThat(e.getMessage())
 					.isEqualTo(
@@ -206,7 +206,7 @@ public class AccountTransferServiceTest {
 									+ Account3
 									+ " withdrawn amount :"
 									+ 21
-									+ " is greater then Account balanace : "
+									+ " is greater than Account balance : "
 									+ accountsService.getAccount(Account3).getBalance());
 		}
 	}

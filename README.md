@@ -11,6 +11,7 @@ Deposit Amount: Facilitates the deposit of funds into a specified account.
 # Usage
 The primary method for transferring funds is transferAmount, which validates accounts and initiates the transfer. The process involves withdrawing the amount from the source account and depositing it into the destination account. 
 The application also provides methods for withdrawing and depositing amounts individually.
+The Transfer service employs locks to ensure thread safety and prevents deadlocks
 
 # Exception Handling
 The system handles various exceptions to maintain the integrity of transactions:
@@ -30,6 +31,4 @@ The logTransaction method serves as a utility for test purposes, providing a det
 
 #Notes
 This code is initial commit and  require additional enhancements for production use, 
-such as incorporating security measures.
-Ensure proper exception handling and logging mechanisms are in place for a real-world application.
-Consider implementing locking mechanisms
+such as incorporating security measures.Resillience fallbacks and timeouts
